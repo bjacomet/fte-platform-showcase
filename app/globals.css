@@ -1,0 +1,119 @@
+@import "tailwindcss";
+
+:root {
+  --background: #07090f;
+  --foreground: #e2e8f0;
+
+  /* FTE Brand Colors */
+  --fte-navy:   #003057;
+  --fte-blue:   #0075a9;
+  --fte-purple: #73308a;
+  --fte-gray:   #c8c8c8;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+/* Welcome animation shimmer sweep */
+@keyframes shimmer-sweep {
+  0%   { transform: translateX(-200%) skewX(-20deg); }
+  100% { transform: translateX(200%)  skewX(-20deg); }
+}
+
+/* Card drawer slide-in */
+@keyframes slide-in {
+  from { transform: translateX(100%); }
+  to   { transform: translateX(0); }
+}
+.animate-slide-in {
+  animation: slide-in 0.2s ease-out;
+}
+
+/* Dim overlay fade */
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.animate-fade-in {
+  animation: fade-in 0.2s ease-out;
+}
+
+/* Board horizontal scrollbar */
+.board-scroll::-webkit-scrollbar {
+  height: 8px;
+}
+
+.board-scroll::-webkit-scrollbar-track {
+  background: #0a0e1a;
+}
+
+.board-scroll::-webkit-scrollbar-thumb {
+  background: var(--fte-blue);
+  border-radius: 4px;
+}
+
+.board-scroll::-webkit-scrollbar-thumb:hover {
+  background: #0090cc;
+}
+
+/* Column outer — transparent at rest (Trello-style): the background photo shows
+   through, and legibility comes from the board scrim + opaque cards + the header
+   backing, not a column panel. The solid container only appears on drag-over
+   (see below). border-top accent color set inline per column. */
+.glass-column {
+  /* Opaque brand gradient (the composited equivalent of the former translucent
+     navy→blue over the dark base) so columns keep this rich look over ANY
+     background — photo or animated — instead of washing out over bright photos. */
+  /* Column panel matches the Brenda button gradient (cyan → purple). Crisp
+     LIGHT beveled outline for a raised 3D edge (no glow): light highlights on
+     the top and bottom insets + a bright border, plus a plain drop shadow for
+     depth. Fully opaque (100%). */
+  background: linear-gradient(135deg, #163f52 0%, #322a58 100%);
+  border: 1px solid rgba(150, 190, 230, 0.45);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.28),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.12),
+    0 8px 20px rgba(0, 0, 0, 0.5);
+  transition: background 0.2s ease-out, box-shadow 0.2s ease-out, border-color 0.2s ease-out;
+}
+
+/* Trello-style drop target — when a card is dragged over a column's list
+   (.is-drag-over is set by KanbanColumn from Droppable's isDraggingOver), the
+   column materializes into a solid outlined container in its accent color so you
+   can see where the card will land (--col-accent set inline per column) */
+.glass-column:has(.is-drag-over) {
+  background: rgba(7, 11, 20, 0.82);
+  border-color: color-mix(in srgb, var(--col-accent, #0075a9) 60%, transparent);
+  box-shadow:
+    0 0 0 2px color-mix(in srgb, var(--col-accent, #0075a9) 45%, transparent),
+    0 8px 28px rgba(0, 0, 0, 0.45);
+}
+
+/* Column header — dark panel below the accent top border */
+.glass-column-header {
+  /* Subtle dark backing (like the nav bar) so the white header text reads crisp
+     over the light cyan top of the column gradient instead of washing to gray. */
+  background: rgba(0, 0, 0, 0.32);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Column body — translucent dark panel continuous with the header, so the
+   header and first card read as one flush surface (real-Trello list look)
+   instead of two dark panels with the photo showing through the gap between.
+   Uses a plain background COLOR, not a backdrop-filter: a filter would
+   establish a containing block for position:fixed and make dragged cards
+   (set to fixed by the DnD lib) anchor to the column and jump on grab — a
+   solid/translucent color has no such effect, so drag stays smooth. */
+.glass-column-body {
+  background: transparent;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}

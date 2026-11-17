@@ -1,0 +1,20 @@
+{
+  "crons": [
+    {
+      "path": "/api/social/cron",
+      "schedule": "*/10 * * * *"
+    },
+    {
+      "path": "/api/adviewer/reconcile",
+      "schedule": "*/5 * * * *"
+    },
+    {
+      "path": "/api/box/keepalive",
+      "schedule": "17 9 * * *"
+    },
+    {
+      "path": "/api/pacing/tapclicks-sync",
+      "schedule": "30 11 * * *"
+    }
+  ]
+}

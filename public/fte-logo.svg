@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 560" width="980" height="560">
+  <!-- Blue border frame (skewed) -->
+  <polygon points="30,30 950,30 970,530 10,530" fill="none" stroke="#0075a9" stroke-width="55"/>
+  <!-- FTE text in purple -->
+  <text x="490" y="390" font-family="Montserrat, Arial Black, sans-serif" font-weight="800" font-size="280" fill="#73308a" text-anchor="middle" letter-spacing="-5">FTE</text>
+</svg>
